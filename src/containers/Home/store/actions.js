@@ -1,19 +1,13 @@
-import axios from 'axios'
 import * as actionsType from './constants'
 const changeList = list => ({
     type: actionsType.CHANGE_LIST,
     list
 })
 
-export const fetchHomeList = (server) => {
-    let url = ''
-    if (server) {
-        url = 'http://47.95.113.63/ssr/api/news.json?secret=D37msjPeC3'
-    } else {
-        url = '/api/news.json?secret=D37msjPeC3'
-    }
-    return dispatch => {
-        return axios.get(url)
+export const fetchHomeList = () => {
+    return (dispatch, getState, axiosInstance) => {
+        // 利用redux-thunk的withExtraArgument api，使异步action接收第三个参数，为withExtraArgument中传递的实例【axiosInstance】
+        return axiosInstance.get('/api/news.json?secret=D37msjPeC3')
             .then(res => {
                 dispatch(changeList(res.data.data))
             })
