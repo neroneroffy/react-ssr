@@ -1,7 +1,7 @@
 import React from 'react'
 import Home from './containers/Home'
 import App from './App'
-import Login from './containers/Login'
+import Translation from './containers/Translation/'
 
 export default [
     {
@@ -16,8 +16,9 @@ export default [
                 loadData: Home.loadData,
             },
             {
-                path: '/login',
-                component: Login,
+                path: '/translation',
+                component: Translation,
+                loadData: Translation.loadData,
             }
 
         ]

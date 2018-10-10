@@ -14,7 +14,7 @@ app.use('/api', proxy('http://47.95.113.63', {
 }))
 
 app.get('*', function (req, res) {
-    const store = getStore()
+    const store = getStore(req)
     const promises = []
     // store中填充什么需要根据当前路由去加载
     const matchedRoutes = matchRoutes(routes, req.path)

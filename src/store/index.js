@@ -4,14 +4,16 @@ import clientAxios from '../client/request'
 import serverAxios from '../server/request'
 import { homeReducer } from '../containers/Home/store'
 import { headerReducer } from '../components/Header/store'
+import { translationReducer } from '../containers/Translation/store'
 const reducer = combineReducers({
     home: homeReducer,
-    header: headerReducer
+    header: headerReducer,
+    translation: translationReducer
 })
 
-export const getStore = () => {
+export const getStore = req => {
     // 避免出现单例的store
-    return createStore(reducer, applyMiddleware(thunk.withExtraArgument(serverAxios)))
+    return createStore(reducer, applyMiddleware(thunk.withExtraArgument(serverAxios(req))))
 }
 export const getClientStore = () => {
     // 取到服务端渲染的store，作为初始值，保证服务端渲染和客户端渲染的store一致

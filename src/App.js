@@ -8,6 +8,6 @@ const App = props => <div className="app">
     { renderRoutes(props.route.routes) }
 </div>
 App.loadData = store => {
-    store.dispatch(actions.getHeaderInfo())
+    return store.dispatch(actions.getHeaderInfo())
 }
 export default App
