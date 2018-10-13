@@ -20,12 +20,28 @@ app.get('*', function (req, res) {
     const matchedRoutes = matchRoutes(routes, req.path)
     matchedRoutes.forEach(v => {
         if (v.route.loadData) {
-            // 调用组件内部的loadData，传入store，通过loadData调用store.dispatch派发action来载入当前路由数据
-            promises.push(v.route.loadData(store))
+            // 包装一层promise是为了容错，无论服务端渲染获取数据时哪个请求加载失败，都会resolve，从而调用Promise.all方法，渲染页面。保证渲染有数据的组件
+            const promise = new Promise((resolve, reject) => {
+                // 调用组件内部的loadData，传入store，通过loadData调用store.dispatch派发action来载入当前路由数据
+                v.route.loadData(store).then(resolve).catch(resolve)
+            })
+
+            promises.push(promise)
         }
     })
     Promise.all(promises).then(() => {
-        res.send(render(req, store, routes))
+        const context = {}
+        const html = render(req, store, routes, context)
+        if (context.action === 'REPLACE') {
+            res.redirect(301, context.url)
+        } else if (context.notFound) {
+            res.status(404)
+            res.send(html)
+        } else {
+            res.send(html)
+        }
+    }).catch(() => {
+        res.end('sorry, request error')
     })
 })
 

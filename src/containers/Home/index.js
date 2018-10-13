@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { fetchHomeList } from "./store/actions";
+import styles from './index.css'
 
 class Home extends React.Component {
     componentDidMount() {
@@ -10,7 +11,7 @@ class Home extends React.Component {
     }
     getList() {
         const { list } = this.props
-        return <div>
+        return <div className={styles.test}>
             {
                 list.map(v => <div key={v.id}>{v.title}</div>)
             }

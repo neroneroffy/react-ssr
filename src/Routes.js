@@ -2,6 +2,7 @@ import React from 'react'
 import Home from './containers/Home'
 import App from './App'
 import Translation from './containers/Translation/'
+import NotFound from './containers/NotFound/'
 
 export default [
     {
@@ -19,6 +20,9 @@ export default [
                 path: '/translation',
                 component: Translation,
                 loadData: Translation.loadData,
+            },
+            {
+                component: NotFound,
             }
 
         ]

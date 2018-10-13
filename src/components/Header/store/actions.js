@@ -6,7 +6,7 @@ const changeLogin = value => ({
 
 export const getHeaderInfo = () => {
     return (dispatch, getState, axiosInstance) => {
-        return axiosInstance.get('/api/isLogin.json?secret=D37msjPeC3')
+        return axiosInstance.get('/api/isLogin.json')
             .then(res => {
                 dispatch(changeLogin(res.data.data.login))
             })
@@ -15,7 +15,7 @@ export const getHeaderInfo = () => {
 
 export const login = () => {
     return (dispatch, getState, axiosInstance) => {
-        return axiosInstance.get('/api/login.json?secret=D37msjPeC3')
+        return axiosInstance.get('/api/login.json')
             .then(() => {
                 dispatch(changeLogin(true))
             })
@@ -24,7 +24,7 @@ export const login = () => {
 
 export const logout = () => {
     return (dispatch, getState, axiosInstance) => {
-        return axiosInstance.get('/api/logout.json?secret=D37msjPeC3')
+        return axiosInstance.get('/api/logout.json')
             .then(() => {
                 dispatch(changeLogin(false))
             })
