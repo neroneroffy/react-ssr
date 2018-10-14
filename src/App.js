@@ -4,7 +4,7 @@ import { renderRoutes } from 'react-router-config'
 import { actions } from './components/Header/store/'
 
 const App = props => <div className="app">
-    <Header/>
+    <Header staticContext={props.staticContext}/>
     { renderRoutes(props.route.routes) }
 </div>
 App.loadData = store => {

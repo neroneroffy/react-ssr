@@ -1,7 +1,10 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Helmet } from "react-helmet"
 import { getTranslationList } from './store/actions'
 import { Redirect } from 'react-router-dom'
+import styles from './index.less'
+import withStyle from '../../withStyle'
 
 class Translation extends React.Component {
     componentDidMount() {
@@ -12,7 +15,7 @@ class Translation extends React.Component {
         const { list, login } = this.props
         return login ? <div>
             {
-                list.map(v => <div key={v.id}>{v.title}</div>)
+                list.map(v => <div className={styles.item} key={v.id}>{v.title}</div>)
             }
         </div>
             :
@@ -20,15 +23,19 @@ class Translation extends React.Component {
     }
 
     render() {
-        return <div className="translation">
-            {this.getList()}
-       </div>
+        return <React.Fragment>
+            <Helmet>
+                <title>SSR 练习--翻译列表</title>
+                <meta charSet="utf-8" name="description" content="翻译列表的描述" />
+            </Helmet>
+
+            <div className={styles.container}>
+                {this.getList()}
+            </div>
+        </React.Fragment>
     }
 }
 
-Translation.loadData = store => {
-    return store.dispatch(getTranslationList())
-}
 const mapStateToProps = state => {
     return {
         list: state.translation.translationList,
@@ -41,4 +48,11 @@ const mapDispatchToProps = dispatch => ({
     }
 })
 
-export default connect(mapStateToProps, mapDispatchToProps)(Translation)
+const ExportTranslation = connect(mapStateToProps, mapDispatchToProps)(withStyle(Translation,styles))
+
+ExportTranslation.loadData = store => {
+    return store.dispatch(getTranslationList())
+}
+
+
+export default ExportTranslation

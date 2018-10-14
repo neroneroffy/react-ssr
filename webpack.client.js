@@ -11,7 +11,7 @@ const clientConfig = {
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /\.less$/,
                 use: [
                     'style-loader',
                     {
@@ -21,7 +21,8 @@ const clientConfig = {
                             modules: true,
                             localIdentName: '[name]_[local]_[hash:base64:5]'
                         }
-                    }
+                    },
+                    'less-loader'
                 ]
             }
         ]

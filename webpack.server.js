@@ -14,7 +14,7 @@ const serverConfig = {
     module: {
         rules: [
             {
-                test: /\.css$/,
+                test: /\.less$/,
                 use: [
                     'isomorphic-style-loader',
                     {
@@ -24,7 +24,8 @@ const serverConfig = {
                             modules: true,
                             localIdentName: '[name]_[local]_[hash:base64:5]'
                         }
-                    }
+                    },
+                    'less-loader'
                 ]
             }
         ]

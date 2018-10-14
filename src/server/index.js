@@ -30,7 +30,9 @@ app.get('*', function (req, res) {
         }
     })
     Promise.all(promises).then(() => {
-        const context = {}
+        const context = {
+            css: []
+        }
         const html = render(req, store, routes, context)
         if (context.action === 'REPLACE') {
             res.redirect(301, context.url)
@@ -40,7 +42,8 @@ app.get('*', function (req, res) {
         } else {
             res.send(html)
         }
-    }).catch(() => {
+    }).catch((err) => {
+        console.log(err);
         res.end('sorry, request error')
     })
 })
